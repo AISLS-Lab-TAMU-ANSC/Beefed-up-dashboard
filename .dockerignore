@@ -1,0 +1,10 @@
+.git
+.gitignore
+.github
+README.md
+streamlit.out.log
+streamlit.err.log
+__pycache__
+*.pyc
+.venv
+venv
