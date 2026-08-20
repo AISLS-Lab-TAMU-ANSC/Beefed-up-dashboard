@@ -1,0 +1,49 @@
+name: Trigger auto deployment for bonsmara-dashboard
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/bonsmara-dashboard-AutoDeployTrigger-4dc14962-b7b7-494d-8b04-822d05b41287.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.BONSMARADASHBOARD_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.BONSMARADASHBOARD_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.BONSMARADASHBOARD_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          _dockerfilePathKey_: _dockerfilePath_
+          _targetLabelKey_: _targetLabel_
+          registryUrl: inrmpacrjvp47qgkhppbo.azurecr.io
+          registryUsername: ${{ secrets.BONSMARADASHBOARD_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.BONSMARADASHBOARD_REGISTRY_PASSWORD }}
+          containerAppName: bonsmara-dashboard
+          resourceGroup: bonsmara-rg
+          imageToBuild: inrmpacrjvp47qgkhppbo.azurecr.io/bonsmara-dashboard:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
