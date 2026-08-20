@@ -435,7 +435,7 @@ if page == "🏠 Overview":
             """, unsafe_allow_html=True)
 
     # Intervention impact
-    st.markdown("<br>")
+    st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("#### Intervention GHG Reduction Impact")
     ints = ds["reduction_by_int"]
     int_names = list(ints.keys())
@@ -495,7 +495,7 @@ elif page == "🤖 ML Model Metrics":
             use_container_width=True, height=280
         )
 
-        st.markdown("<br>#### Classification Metrics (Target: Low / Medium / High GHG class)")
+        st.markdown("#### Classification Metrics (Target: Low / Medium / High GHG class)")
         cls_rows = []
         for name, r in models.items():
             cls_rows.append({
@@ -741,7 +741,7 @@ elif page == "📊 Feature Importance":
             </div>
             """, unsafe_allow_html=True)
 
-        st.markdown("<br>")
+        st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("#### Top 5 Drivers")
         top5 = fi_df.nlargest(5, "Importance")
         for _, row in top5.iterrows():
@@ -758,9 +758,8 @@ elif page == "📊 Feature Importance":
               </div>
             </div>
             """, unsafe_allow_html=True)
-
+    st.markdown("<br><hr>", unsafe_allow_html=True)
     # Cross-model comparison of top features
-    st.markdown("<br><hr><br>")
     st.markdown("#### Cross-Model Feature Comparison (Top Features in RF vs GB)")
     rf_fi = models["Random Forest"]["feature_importance"]
     gb_fi = models["Gradient Boosting"]["feature_importance"]
@@ -1006,7 +1005,7 @@ elif page == "💉 Intervention Analysis":
                 st.markdown(f"<span style='font-size:0.82rem; color:{muted_color}'>{desc}</span>",
                             unsafe_allow_html=True)
 
-    st.markdown("<br>")
+    st.markdown("<br>", unsafe_allow_html=True)
     t1, t2, t3 = st.tabs(["📊 GHG Comparison", "🔬 CH₄ & Sequestration", "📉 Dose-Response"])
 
     with t1:
@@ -1224,7 +1223,7 @@ elif page == "💰 Farmer Benefits":
             </div>
             """, unsafe_allow_html=True)
 
-    st.markdown("<br>")
+    st.markdown("<br>",unsafe_allow_html=True)
 
     # ── Explainer banner ─────────────────────────────────────────
     st.markdown(f"""
@@ -1295,7 +1294,7 @@ elif page == "💰 Farmer Benefits":
                 </div>
                 """, unsafe_allow_html=True)
 
-        st.markdown("<br>")
+        st.markdown("<br>",unsafe_allow_html=True)
         e1, e2 = st.columns(2)
 
         with e1:
@@ -1946,7 +1945,8 @@ elif page == "🗃️ Dataset Explorer":
                 """, unsafe_allow_html=True)
 
         # Data table
-        st.markdown("<br>#### Raw Data (first 100 rows)")
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("#### Raw Data (first 100 rows)", unsafe_allow_html=True)
         show_cols = ["Animal_ID", "State", "Sex", "Age_months", "Current_Weight_kg",
                      "Housing_Type", "Forage_Type", "Total_CH4_kg",
                      "Baseline_Net_GHG_CO2e_kg", "Int_Net_GHG_CO2e_kg",
