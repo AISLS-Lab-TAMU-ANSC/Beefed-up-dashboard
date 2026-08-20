@@ -15,6 +15,7 @@ from plotly.subplots import make_subplots
 import pandas as pd
 import numpy as np
 import json
+import matplotlib
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -659,7 +660,7 @@ elif page == "🤖 ML Model Metrics":
             z=cm_norm,
             x=[f"Pred: {l}" for l in class_labels],
             y=[f"True: {l}" for l in class_labels],
-            colorscale=[[0, PALETTE["bg"]], [0.5, MODEL_COLORS[sel_cm] + "80"],
+            colorscale=[[0, PALETTE["bg"]], [0.5, hex_to_rgba(MODEL_COLORS[sel_cm], 0.50)],
                         [1, MODEL_COLORS[sel_cm]]],
             showscale=True,
         ))
@@ -938,9 +939,9 @@ elif page == "🔮 Predict GHG Footprint":
                 axis=dict(range=[0, 6000], tickcolor=PALETTE["muted"]),
                 bar=dict(color=class_color, thickness=0.25),
                 steps=[
-                    dict(range=[0, 2000], color=PALETTE["green"] + "30"),
-                    dict(range=[2000, 3500], color=PALETTE["yellow"] + "30"),
-                    dict(range=[3500, 6000], color=PALETTE["orange"] + "30"),
+                    dict(range=[0, 2000], color=hex_to_rgba(PALETTE["green"], 0.19)),
+                    dict(range=[2000, 3500], color=hex_to_rgba(PALETTE["yellow"], 0.19)),
+                    dict(range=[3500, 6000], color=hex_to_rgba(PALETTE["orange"], 0.19)),
                 ],
                 threshold=dict(line=dict(color=PALETTE["red"], width=2),
                                thickness=0.75, value=ds["mean_baseline_ghg"]),
